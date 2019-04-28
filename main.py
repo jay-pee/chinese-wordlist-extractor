@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #coding: utf-8
 
@@ -6,6 +6,7 @@ import re
 import sys
 import csv
 from tqdm import tqdm
+import functools
 
 dictionary = []
 document = ''
@@ -33,7 +34,7 @@ def load_document():
 def write_csv():
     global dictionary
 
-    with open('output.csv', 'wb') as csvfile:
+    with open('output.csv', 'w') as csvfile:
         csvwriter = csv.writer(csvfile, delimiter='\t', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for word in dictionary:
             if word[3] > 0:
@@ -49,9 +50,9 @@ def count_words():
 
 
 def custom_cmp(a, b):
-    if len(b[0].decode("utf-8")) == 1 and len(a[0].decode("utf-8")) != 1:
+    if len(b[0]) == 1 and len(a[0]) != 1:
         return -1
-    elif len(a[0].decode("utf-8")) == 1 and len(b[0].decode("utf-8")) != 1:
+    elif len(a[0]) == 1 and len(b[0]) != 1:
         return 1
     else:
         if a[3] > b[3]:
@@ -63,7 +64,7 @@ def custom_cmp(a, b):
 def sort_words():
     global dictionary
 
-    dictionary.sort(custom_cmp)
+    dictionary.sort(key = functools.cmp_to_key(custom_cmp))
 
 
 
