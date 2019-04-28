@@ -16,7 +16,7 @@ def parse_dictionary():
     global dictionary
 
     # https://www.mdbg.net/chinese/dictionary?page=cc-cedict
-    with open('cedict_1_0_ts_utf-8_mdbg.txt') as f:
+    with open('cedict_1_0_ts_utf-8_mdbg.txt', encoding="utf8") as f:
         for line in f:
             if re.match("^#", line):
                 continue
@@ -27,14 +27,14 @@ def parse_dictionary():
 def load_document():
     global document
 
-    with open('input.txt', 'r') as myfile:
+    with open('input.txt', 'r', encoding="utf8") as myfile:
         document = myfile.read().replace('\n', '')
 
 
 def write_csv():
     global dictionary
 
-    with open('output.csv', 'w') as csvfile:
+    with open('output.csv', 'w', encoding="utf8") as csvfile:
         csvwriter = csv.writer(csvfile, delimiter='\t', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for word in dictionary:
             if word[3] > 0:
